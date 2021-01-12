@@ -1,0 +1,20 @@
+{
+  "name": "jira-agile-metrics",
+  "version": "1.0.0",
+  "description": "A jira tool to export agile metrics in a chart",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "author": "Jorge Leite (ujorgeleite)",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  },
+  "dependencies": {
+    "exceljs": "^4.1.1",
+    "read-excel-file": "^5.0.0",
+    "xlsx-chart": "^0.4.2"
+  }
+}
