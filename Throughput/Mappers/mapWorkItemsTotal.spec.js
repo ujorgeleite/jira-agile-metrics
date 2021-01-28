@@ -1,5 +1,5 @@
 const { deepStrictEqual, ok } = require("assert");
-const { mapWorkItemsTotal } = require("./mapWorkItemsTotal");
+const mapWorkItemsTotal = require("./mapWorkItemsTotal");
 
 describe("MapWorkItemsTotal spec", () => {
   const rows = [

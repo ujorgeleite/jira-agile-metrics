@@ -1,12 +1,6 @@
 const mapDataChart = (data) => {
-  const finalData = data.map((item, index) => {
-    return `"${item.finalDate.toLocaleString()}": {"Throughput": ${item.throughput}}`;
-  });
-
-  const dataString = `{${finalData.toLocaleString()}}`;
+  const dataString = `{${data.toLocaleString()}}`;
   return JSON.parse(dataString);
 };
 
-module.exports = {
-  mapDataChart,
-};
+module.exports = mapDataChart;
