@@ -1,5 +1,11 @@
+const moment = require("moment");
+
 const isDate = (value) => {
-  return value instanceof Date;
+  return value instanceof Date || value instanceof moment;
+};
+
+const getDate = (value) => {
+  return value.length > 0 ? new moment(value) : value;
 };
 
 const mapDate = (date) => {
@@ -63,8 +69,9 @@ const schema = {
   Startdate: {
     prop: "Start",
     type: (startDate) => {
-      if (isDate(startDate)) {
-        return mapDate(startDate);
+      const dateStart = getDate(startDate);
+      if (isDate(dateStart)) {
+        return mapDate(dateStart);
       } else {
         return "empty";
       }
