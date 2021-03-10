@@ -1,10 +1,9 @@
+const moment = require("moment");
+
 const isInPeriodList = (filteredItems, item) => {
-  return filteredItems.some((filtered) => {
-    return (
-      item.Resolved >= filtered.initialDate &&
-      item.Resolved <= filtered.finalDate
-    );
-  });
+  return filteredItems.some(({ initialDate, finalDate }) =>
+    moment(item.Resolved).isBetween(initialDate, finalDate)
+  );
 };
 
 const isResolved = (item) => {
@@ -12,20 +11,13 @@ const isResolved = (item) => {
 };
 
 const sortDates = (rows) => {
-  return rows
-    .filter(isResolved)
-    .map((item) => {
-      setTimeFixed(item.Resolved);
-      return item;
-    })
-    .sort((a, b) => a.Resolved - b.Resolved);
+  return rows.filter(isResolved).sort((a, b) => a.Resolved - b.Resolved);
 };
 
 const mapItemsByPeriod = (finalDate, sortedItems, item) => {
-  const itemsInPeriod = sortedItems.filter(isResolved).filter((sortedItem) => {
-    return (
-      sortedItem.Resolved >= item.Resolved && sortedItem.Resolved <= finalDate
-    );
+  const itemsInPeriod = sortedItems.filter(isResolved)
+  .filter((sortedItem) => {
+    return moment(sortedItem.Resolved).isBetween(item.Resolved, finalDate);
   });
 
   return {
@@ -34,12 +26,6 @@ const mapItemsByPeriod = (finalDate, sortedItems, item) => {
     items: itemsInPeriod,
     throughput: itemsInPeriod.length,
   };
-};
-
-const setTimeFixed = (date) => {
-  date.setHours(00);
-  date.setMinutes(00);
-  date.setSeconds(00);
 };
 
 const getFinalDate = (resolved, daysPeriod) => {
@@ -52,6 +38,8 @@ const getFinalDate = (resolved, daysPeriod) => {
 const mapWorkItemsTotal = ({ rows, daysPeriod }) => {
   const itemsInOrderByDate = sortDates(rows);
   const itemsInPeriod = [];
+
+
 
   itemsInOrderByDate.filter(isResolved).map((item) => {
     if (!isInPeriodList(itemsInPeriod, item)) {
