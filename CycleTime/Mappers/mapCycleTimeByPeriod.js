@@ -20,9 +20,11 @@ const sortDates = (leadTimeData) => {
 
 const isBusinessItem = (item) => ["Story"].includes(item.IssueType);
 
-const mapBusinessCycleTime = ({ Month, Year }, cycleTimeItems) => {
-  const businessItems = cycleTimeItems
-    .filter((cycleItem) => isBusinessItem(cycleItem))
+const isIncidentItem = (item) =>["Incident", "Support", "Problem"].includes(item.IssueType);
+
+const mapCycleTime = ({ Month, Year }, cycleTimeItems, condition) => {
+  const cycleItems = cycleTimeItems
+    .filter((cycleItem) => condition(cycleItem))
     .filter((cycleItemFiltered) => {
       const dateString = new Date(cycleItemFiltered.Resolved)
         .toISOString()
@@ -32,15 +34,15 @@ const mapBusinessCycleTime = ({ Month, Year }, cycleTimeItems) => {
       return new moment(dateString).isSame(compareDate, "month");
     });
 
-  const qtdItens = businessItems.length;
+  const qtdItens = cycleItems.length;
 
-  const businessCycleTime = Math.round(
-    businessItems.reduce((acc, curr) => {
+  const cycleTime = Math.round(
+    cycleItems.reduce((acc, curr) => {
       return acc + curr.CycleTime;
     }, 0) / qtdItens
   );
 
-  const value = businessCycleTime > 0 ? businessCycleTime : 0;
+  const value = cycleTime > 0 ? cycleTime : 0;
 
   return { qtdItens, value };
 };
@@ -53,17 +55,24 @@ const mapCycleTimeByPeriod = (cycleTimeData) => {
     const { Month, Year } = item;
 
     if (!isInPeriodList(itemsInPeriod, { Month, Year })) {
-      const businessCycleTime = mapBusinessCycleTime(
+      const businessCycleTime = mapCycleTime(
         { Month, Year },
-        cycleTimeData
+        cycleTimeData,
+        isBusinessItem
+      );
+
+      const incidentCycleTime = mapCycleTime(
+        { Month, Year },
+        cycleTimeData,
+        isIncidentItem
       );
 
       itemsInPeriod.push({
         month: Month,
         year: Year,
         period: `${Month + 1}-${Year}`,
-        quantidadeItens: businessCycleTime.qtdItens,
-        businessCycleTime: businessCycleTime.value,
+        businessCycleTime: businessCycleTime,
+        incidentCycleTime: incidentCycleTime
       });
     }
   });
