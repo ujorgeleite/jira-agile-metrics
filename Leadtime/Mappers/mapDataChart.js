@@ -4,12 +4,9 @@ const mapDataChart = ({ leadTimeByPeriod, cycleTimeByPeriod }) => {
       (cycleItem) =>
         cycleItem.month == item.month && cycleItem.year == item.year
     )[0];
-    const cycleTime =
-      !!cycleItem
-        ? cycleItem.businessCycleTime 
-        : 0;
+    const { businessCycleTime, incidentCycleTime } = cycleItem;
 
-    return `"${item.period}": {"LeadTimeNegócio": ${item.businessLeadTime},"CycleTimeNegócio": ${cycleTime}, "QuantidadeItens": ${item.quantidadeItens}} `;
+    return `"${item.period}": {"LeadTimeNegócio": ${item.businessLeadTime},"CycleTimeNegócio": ${businessCycleTime.value},"CycleTimeProblemas": ${incidentCycleTime.value}, "QuantidadeItensNegócio": ${item.quantidadeItens},"QuantidadeItensProblemas": ${incidentCycleTime.qtdItens}} `;
   });
 
   const dataFinal = `{${dataString.toLocaleString()}}`;
