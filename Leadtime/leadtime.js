@@ -19,7 +19,7 @@ const drawLeadtimeChart = (dataChart, titles) => {
     file: "./Files/Output/Leadtime.xlsx",
     chart: "column",
     titles: titles,
-    fields: ["LeadTimeNegócio","CycleTimeNegócio","QuantidadeItens"],
+    fields: ["LeadTimeNegócio","CycleTimeNegócio","CycleTimeProblemas","QuantidadeItensNegócio","QuantidadeItensProblemas"],
     data: dataChart,
   };
 
