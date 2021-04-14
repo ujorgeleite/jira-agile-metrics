@@ -1,6 +1,7 @@
 const file = require("./File/file");
 const { BreakFromJiraFile } = require("./File/breakFile");
 const exportThroughputChart = require("./Throughput/throughput");
+const exportLeadtimeChart = require("./Leadtime/leadtime");
 
 const runCode = async () => {
   console.time("general execution");
@@ -11,7 +12,8 @@ const runCode = async () => {
       const readFile = await file.getFile(fileName);
       setTimeout(async () => {
         exportThroughputChart(readFile);
-      }, 2000);
+        exportLeadtimeChart(readFile)
+      }, 4000);
       //console.log(readFile);
     }, 4000);
   });

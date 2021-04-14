@@ -11,7 +11,7 @@ const {
 const drawThroughputChart = (titles, dataChart, issueTypes) => {
   var xlsxChart = new XLSXChart();
   var opts = {
-    file: "./Files/Output/chart.xlsx",
+    file: "./Files/Output/Throughput.xlsx",
     chart: "column",
     titles: titles,
     fields: issueTypes,
