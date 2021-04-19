@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "chai": "^4.3.4",
+    "dotenv": "^8.2.0",
     "exceljs": "^4.1.1",
     "hapi": "^18.1.0",
     "moment": "^2.29.1",

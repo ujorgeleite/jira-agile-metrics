@@ -1,3 +1,4 @@
+require('dotenv').config()
 const hapi = require("hapi");
 const FileRoute = require("./Api/Routes/fileRoutes");
 const path = require("path");
@@ -8,8 +9,8 @@ function mapRoutes(instance, methods) {
 
 const api = async () => {
   const server = hapi.server({
-    port: 4500,
-    host: process.env.Host,
+    port: process.env.PORT || 3000,
+    host: process.env.HOST,
   });
 
   await server.start();
