@@ -2,7 +2,7 @@ const moment = require("moment");
 
 const isInPeriodList = (filteredItems, item) => {
   return filteredItems.some(({ initialDate, finalDate }) =>
-    moment(item.Resolved).isBetween(initialDate, finalDate)
+  moment(item.Resolved).isBetween(initialDate, finalDate)
   );
 };
 
@@ -19,7 +19,7 @@ const mapItemsByPeriod = (finalDate, sortedItems, item) => {
   .filter((sortedItem) => {
     return moment(sortedItem.Resolved).isBetween(item.Resolved, finalDate);
   });
-
+  
   return {
     initialDate: item.Resolved,
     finalDate: finalDate,
@@ -29,18 +29,18 @@ const mapItemsByPeriod = (finalDate, sortedItems, item) => {
 };
 
 const getFinalDate = (resolved, daysPeriod) => {
-  const date = new Date(resolved.toLocaleDateString());
+  const date = new Date(resolved.toDateString());
   date.setDate(date.getDate() + daysPeriod);
-
+  
   return date;
 };
 
 const mapWorkItemsTotal = ({ rows, daysPeriod }) => {
   const itemsInOrderByDate = sortDates(rows);
   const itemsInPeriod = [];
-
-
-
+  
+  
+  
   itemsInOrderByDate.filter(isResolved).map((item) => {
     if (!isInPeriodList(itemsInPeriod, item)) {
       let finalDate = getFinalDate(item.Resolved, daysPeriod);
@@ -48,12 +48,13 @@ const mapWorkItemsTotal = ({ rows, daysPeriod }) => {
         finalDate,
         itemsInOrderByDate,
         item
-      );
-      itemsInPeriod.push(mappedPeriodItem);
-    }
-  });
-
-  return itemsInPeriod;
-};
-
-module.exports = mapWorkItemsTotal;
+        );
+        itemsInPeriod.push(mappedPeriodItem);
+      }
+    });
+    
+    return itemsInPeriod;
+  };
+  
+  module.exports = mapWorkItemsTotal;
+  

@@ -22,7 +22,7 @@ describe("MapThroughptuByType Spec", () => {
   describe("Given that the list has 3 types of items", () => {
     const results = mapThroughputByType(data,issueTypes);
     const resultString = `{${results}}`
-    const expected = '{"1/21/2021": {"Story":3,"Bug":2,"Task":2,"Throughput": 7}}'
+    const expected = '{"21/01/2021": {"Story":3,"Bug":2,"Task":2,"Throughput": 7}}'
     
 
     it("Then the return will the same of expected", () => {

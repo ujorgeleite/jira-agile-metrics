@@ -21,13 +21,14 @@ const sortDates = (leadTimeData) => {
 const isBusinessItem = (item) => ["Story"].includes(item.IssueType);
 
 const mapBusinessLeadTime = ({ Month, Year }, leaditens) => {
+  const month = mapMonth(Month).toString().padStart(2,'0')
   const businessItems = leaditens
     .filter((leadItem) => isBusinessItem(leadItem))
     .filter((leadItemFiltered) => {
       const dateString = new Date(leadItemFiltered.Resolved)
         .toISOString()
         .slice(0, 10);
-      const compareDate = `${Year}-${mapMonth(Month)}-01`;
+      const compareDate = `${Year}-${month}-01`;
 
       return new moment(dateString).isSame(compareDate, "month");
     });
