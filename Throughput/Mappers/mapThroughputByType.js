@@ -22,7 +22,7 @@ const mapThroughputByType = (data, issueTypes) => {
   let throughputByType = mapByType(issueTypes, items);
   throughputByType += `"Throughput": ${throughput}`;
 
-  return `"${finalDate.toLocaleDateString()}": {${throughputByType}}`;
+  return `"${finalDate.toLocaleDateString('pt-BR')}": {${throughputByType}}`;
 };
 
 module.exports = mapThroughputByType;
