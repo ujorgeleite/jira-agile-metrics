@@ -1,6 +1,5 @@
 const chai = require("chai");
 const { expect } = chai;
-const FormData = require("FormData");
 const fs = require("fs");
 const { promisify } = require("util");
 
