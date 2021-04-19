@@ -9,7 +9,7 @@ function mapRoutes(instance, methods) {
 const api = async () => {
   const server = hapi.server({
     port: 4500,
-    host: "localhost",
+    host: process.env.Host,
   });
 
   await server.start();
