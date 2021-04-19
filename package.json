@@ -4,7 +4,9 @@
   "description": "A jira tool to export agile metrics in a chart",
   "main": "index.js",
   "scripts": {
-    "test": "mocha **/*.spec.js",
+    "test": "mocha **/*.spec.js --recursive",
+    "ti": "mocha **/**/*.spec.js --recursive",
+    "all": "npm run test && npm run ti ",
     "start": "node index.js"
   },
   "author": "Jorge Leite (ujorgeleite)",
@@ -13,7 +15,9 @@
     "mocha": "^8.2.1"
   },
   "dependencies": {
+    "chai": "^4.3.4",
     "exceljs": "^4.1.1",
+    "hapi": "^18.1.0",
     "moment": "^2.29.1",
     "read-excel-file": "^5.0.0",
     "xlsx-chart": "^0.4.2"
