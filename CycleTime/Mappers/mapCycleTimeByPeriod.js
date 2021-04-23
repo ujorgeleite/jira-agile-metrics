@@ -23,13 +23,14 @@ const isBusinessItem = (item) => ["Story"].includes(item.IssueType);
 const isIncidentItem = (item) =>["Incident", "Support", "Problem"].includes(item.IssueType);
 
 const mapCycleTime = ({ Month, Year }, cycleTimeItems, condition) => {
+  const month = mapMonth(Month).toString().padStart(2,'0')
   const cycleItems = cycleTimeItems
     .filter((cycleItem) => condition(cycleItem))
     .filter((cycleItemFiltered) => {
       const dateString = new Date(cycleItemFiltered.Resolved)
         .toISOString()
         .slice(0, 10);
-      const compareDate = `${Year}-${mapMonth(Month)}-01`;
+      const compareDate = `${Year}-${month}-01`;
 
       return new moment(dateString).isSame(compareDate, "month");
     });
