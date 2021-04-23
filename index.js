@@ -1,11 +1,13 @@
-const file = require("./File/file");
-const { BreakFromJiraFile } = require("./File/breakFile");
-const exportThroughputChart = require("./Throughput/throughput");
-const exportLeadtimeChart = require("./Leadtime/leadtime");
+const path = require('path');
+const srcDir = path.dirname(require.main.filename)+'/src/'
+const file = require(`${srcDir}File/file`);
+const { BreakFromJiraFile } = require(`${srcDir}File/breakFile`);
+const exportThroughputChart = require(`${srcDir}Throughput/throughput`);
+const exportLeadtimeChart = require(`${srcDir}Leadtime/leadtime`);
 
 const runCode = async () => {
   console.time("general execution");
-  const fileNames = await BreakFromJiraFile("./Files/Input/fileTest.xlsx");
+  const fileNames = await BreakFromJiraFile(`${srcDir}Files/Input/fileTest.xlsx`);
 
   fileNames.map(async (fileName) => {
     setTimeout(async () => {
