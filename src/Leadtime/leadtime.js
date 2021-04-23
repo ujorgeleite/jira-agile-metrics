@@ -11,7 +11,7 @@ const {
 const {
   mapCycleTimeData,
   mapCycleTimeByPeriod,
-} = require("../CycleTime/Mappers/index");
+} = require("../Cycletime/Mappers/index");
 
 const drawLeadtimeChart = (dataChart, titles) => {
   var xlsxChart = new XLSXChart();
