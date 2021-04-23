@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const isTheSameType = (item, issueType) => {
   return item.IssueType.toString() == issueType;
 };
@@ -21,8 +23,7 @@ const mapThroughputByType = (data, issueTypes) => {
   
   let throughputByType = mapByType(issueTypes, items);
   throughputByType += `"Throughput": ${throughput}`;
-
-  return `"${finalDate.toLocaleDateString('pt-BR')}": {${throughputByType}}`;
+  return `"${new moment(finalDate).format('DD/MM/YYYY')}": {${throughputByType}}`;
 };
 
 module.exports = mapThroughputByType;
