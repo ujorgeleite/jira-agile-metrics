@@ -17,8 +17,13 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm i
-      - run: node index.js
-      - run: npm run all
+      - name: Install all dependencies
+        run: npm i
+      - name: Fix all dependencies problems
+        run: npm audit fix
+      - name: Breakfile to generate necessary files for tests
+        run: node index.js
+      - name: All tests
+        run: npm run test
 
 
