@@ -14,10 +14,10 @@ const {
   mapCycleTimeByPeriod,
 } = require("../Cycletime/Mappers/index");
 
-const drawLeadtimeChart = (dataChart, titles, src) => {
+const drawLeadtimeChart = ({fileName, dataChart, titles}, src) => {
   var xlsxChart = new XLSXChart();
   var opts = {
-    file: `${src}Files/Output/Leadtime.xlsx`,
+    file: `${src}Files/Output/${fileName}_Leadtime.xlsx`,
     chart: "column",
     titles: titles,
     fields: ["LeadTimeNegócio","CycleTimeNegócio","CycleTimeProblemas","QuantidadeItensNegócio","QuantidadeItensProblemas"],
@@ -29,7 +29,7 @@ const drawLeadtimeChart = (dataChart, titles, src) => {
   });
 };
 
-const exportLeadtimeChart = async (file, src) => {
+const exportLeadtimeChart = async ({fileName, file}, src) => {
   const data = await mapLeadTimeData(file);
 
   const cycleTimeData = mapCycleTimeData(data);
@@ -38,8 +38,8 @@ const exportLeadtimeChart = async (file, src) => {
   const leadTimeByPeriod = mapLeadTimeByPeriod(data);
   const titles = await mapFields(leadTimeByPeriod);
   const dataChart = await mapDataChart({ leadTimeByPeriod, cycleTimeByPeriod });
-
-  return drawLeadtimeChart(dataChart, titles, src);
+  const params = {fileName, dataChart, titles}
+  return drawLeadtimeChart(params, src);
 };
 
 module.exports = exportLeadtimeChart;

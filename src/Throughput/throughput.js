@@ -9,10 +9,10 @@ const {
   mapThroughputByType,
 } = require("./Mappers/index");
 
-const drawThroughputChart = (titles, dataChart, issueTypes, srcDir) => {
+const drawThroughputChart = ({fileName, titles, dataChart, issueTypes}, srcDir) => {
   var xlsxChart = new XLSXChart();
   var opts = {
-    file: `${srcDir}Files/Output/Throughput.xlsx`,
+    file: `${srcDir}Files/Output/${fileName}_THROUGHPUT.xlsx`,
     chart: "column",
     titles: titles,
     fields: issueTypes,
@@ -24,7 +24,7 @@ const drawThroughputChart = (titles, dataChart, issueTypes, srcDir) => {
   });
 };
 
-const exportThroughputChart = async (file,srcDir) => {
+const exportThroughputChart = async ({fileName, file},srcDir) => {
   const data = await mapWorkItemsTotal({ rows: file.rows, daysPeriod: 7 });
   const issueTypes = mapIssueTypes(file.rows);
   const throughputByType = data.map((item) =>
@@ -33,7 +33,8 @@ const exportThroughputChart = async (file,srcDir) => {
   const dataChart = mapDataChart(throughputByType);
   const titles = mapTitles(data);
   issueTypes.push("Throughput")
-  return drawThroughputChart(titles, dataChart, issueTypes,srcDir);
+  const params = {fileName, titles, dataChart, issueTypes}
+  return drawThroughputChart(params,srcDir);
 };
 
 module.exports = exportThroughputChart;
