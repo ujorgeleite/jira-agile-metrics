@@ -1,3 +1,4 @@
+//TODO Refactory for class for decrease parameters
 var XLSXChart = require("xlsx-chart");
 
 const {
@@ -8,10 +9,10 @@ const {
   mapThroughputByType,
 } = require("./Mappers/index");
 
-const drawThroughputChart = (titles, dataChart, issueTypes) => {
+const drawThroughputChart = (titles, dataChart, issueTypes, srcDir) => {
   var xlsxChart = new XLSXChart();
   var opts = {
-    file: "./Files/Output/Throughput.xlsx",
+    file: `${srcDir}Files/Output/Throughput.xlsx`,
     chart: "column",
     titles: titles,
     fields: issueTypes,
@@ -23,7 +24,7 @@ const drawThroughputChart = (titles, dataChart, issueTypes) => {
   });
 };
 
-const exportThroughputChart = async (file) => {
+const exportThroughputChart = async (file,srcDir) => {
   const data = await mapWorkItemsTotal({ rows: file.rows, daysPeriod: 7 });
   const issueTypes = mapIssueTypes(file.rows);
   const throughputByType = data.map((item) =>
@@ -32,7 +33,7 @@ const exportThroughputChart = async (file) => {
   const dataChart = mapDataChart(throughputByType);
   const titles = mapTitles(data);
   issueTypes.push("Throughput")
-  return drawThroughputChart(titles, dataChart, issueTypes);
+  return drawThroughputChart(titles, dataChart, issueTypes,srcDir);
 };
 
 module.exports = exportThroughputChart;

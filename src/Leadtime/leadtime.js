@@ -1,3 +1,4 @@
+//TODO Refactory for class for decrease parameters
 var XLSXChart = require("xlsx-chart");
 var fs = require("fs");
 
@@ -13,10 +14,10 @@ const {
   mapCycleTimeByPeriod,
 } = require("../Cycletime/Mappers/index");
 
-const drawLeadtimeChart = (dataChart, titles) => {
+const drawLeadtimeChart = (dataChart, titles, src) => {
   var xlsxChart = new XLSXChart();
   var opts = {
-    file: "./Files/Output/Leadtime.xlsx",
+    file: `${src}Files/Output/Leadtime.xlsx`,
     chart: "column",
     titles: titles,
     fields: ["LeadTimeNegócio","CycleTimeNegócio","CycleTimeProblemas","QuantidadeItensNegócio","QuantidadeItensProblemas"],
@@ -28,7 +29,7 @@ const drawLeadtimeChart = (dataChart, titles) => {
   });
 };
 
-const exportLeadtimeChart = async (file) => {
+const exportLeadtimeChart = async (file, src) => {
   const data = await mapLeadTimeData(file);
 
   const cycleTimeData = mapCycleTimeData(data);
@@ -38,7 +39,7 @@ const exportLeadtimeChart = async (file) => {
   const titles = await mapFields(leadTimeByPeriod);
   const dataChart = await mapDataChart({ leadTimeByPeriod, cycleTimeByPeriod });
 
-  return drawLeadtimeChart(dataChart, titles);
+  return drawLeadtimeChart(dataChart, titles, src);
 };
 
 module.exports = exportLeadtimeChart;
