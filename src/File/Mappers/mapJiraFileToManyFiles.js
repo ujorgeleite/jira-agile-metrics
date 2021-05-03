@@ -1,6 +1,6 @@
 const mapCell = require('./mapCell') 
 const path = require('path');
-const srcDir = path.dirname(require.main.filename)+'/src/'
+const srcDir = path.dirname(require.main.filename);
 
 const listAddress = [];
 
@@ -56,7 +56,7 @@ const mapFromSheetToManyFiles = async (file, Excel) => {
       const workSheet = newWorkbook.addWorksheet(`worksheet_${index}`);
       const rows = await mapRows(sheet);
       workSheet.addRows(rows);
-      const fileName = `${srcDir}Files/SlicedFiles/file_${index}.xlsx`;
+      const fileName = `${srcDir}/Files/SlicedFiles/file_${index}.xlsx`;
       await fileNames.push(fileName);
       await newWorkbook.xlsx.writeFile(fileName);
     }
