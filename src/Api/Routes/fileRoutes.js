@@ -11,9 +11,9 @@ class FileRoutes extends BaseRoute {
   constructor(rootPath, fileExport) {
     super();
     this.rootPath = rootPath;
-    this.downloadRootPath = this.rootPath + '/Files/Output';
+    this.downloadRootPath = this.rootPath + "/Files/Output";
     this.uploadRootPath = this.rootPath + "/Files/Input";
-    this.fileExport = fileExport
+    this.fileExport = fileExport;
   }
 
   listFiles() {
@@ -21,7 +21,10 @@ class FileRoutes extends BaseRoute {
       path: "/List",
       method: "GET",
       handler: async () => {
-        return await readFiles(`${this.rootPath}/Files/Input`);
+        const data = await readFiles(`${this.rootPath}/Files/Input`);
+        return data.map(item => {
+          return { name: item };
+        });
       },
     };
   }
@@ -52,12 +55,10 @@ class FileRoutes extends BaseRoute {
       path: "/Process",
       method: "Post",
       handler: async () => {
-        
-        await this.fileExport.exportFiles()
-        return "Gerado com sucesso"
+        await this.fileExport.exportFiles();
+        return "Gerado com sucesso";
       },
     };
-
   }
   uploadFile() {
     return {
