@@ -21,7 +21,7 @@ class FileRoutes extends BaseRoute {
       path: "/List",
       method: "GET",
       handler: async () => {
-        const data = await readFiles(`${this.rootPath}/Files/Output`);
+        const data = await readFiles(`${this.rootPath}/Files/Input`);
         return data.map(item => {
           return { name: item };
         });
@@ -36,7 +36,7 @@ class FileRoutes extends BaseRoute {
       path: "/Download/List",
       method: "GET",
       handler: async () => {
-        const data = await readFiles(`${this.rootPath}/Files/Input`);
+        const data = await readFiles(`${this.rootPath}/Files/Output`);
         return data.map(item => {
           return { name: item };
         });
