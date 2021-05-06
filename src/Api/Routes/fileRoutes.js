@@ -29,20 +29,18 @@ class FileRoutes extends BaseRoute {
     };
   }
 
-
-  listDownloadFiles(){
-
+  listDownloadFiles() {
     return {
       path: "/Download/List",
       method: "GET",
       handler: async () => {
         const data = await readFiles(`${this.rootPath}/Files/Output`);
-        return data.map(item => {
+        return data.filter(item => item.indexOf(".xlsx") >= 0)
+        .map(item => {
           return { name: item };
         });
       },
     };
-
   }
 
   downloadFiles() {
