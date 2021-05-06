@@ -6,6 +6,7 @@ const { promisify } = require("util");
 const BaseRoute = require("./Base/baseRoute");
 const readFiles = promisify(fs.readdir);
 const writeFile = promisify(fs.writeFile);
+const deleteFile = promisify(fs.unlink);
 
 class FileRoutes extends BaseRoute {
   constructor(rootPath, fileExport) {
@@ -90,6 +91,31 @@ class FileRoutes extends BaseRoute {
       },
     };
   }
+
+  deleteFiles(){
+    return {
+      path: "/Delete",
+      method: "DELETE",
+      handler: async (request, h) => {
+        const inputFiles = await readFiles(`${this.rootPath}/Files/Input`);
+        const downloadFiles = await readFiles(`${this.rootPath}/Files/Output`);
+        
+        inputFiles.map(async (item) => {
+          const file = `${this.rootPath}/Files/Input/${item}`
+          await deleteFile(file);
+        })
+
+        downloadFiles.map(async (item) => {
+          const file = `${this.rootPath}/Files/Output/${item}`
+          await deleteFile(file);
+        })
+
+        return "Arquivos removidos com  sucesso";
+      },
+    };
+  }
+
+
 }
 
 module.exports = FileRoutes;
