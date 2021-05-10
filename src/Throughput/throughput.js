@@ -26,15 +26,15 @@ const drawThroughputChart = ({fileName, titles, dataChart, issueTypes}, srcDir) 
 
 const exportThroughputChart = async ({fileName, file},srcDir) => {
   const data = await mapWorkItemsTotal({ rows: file.rows, daysPeriod: 7 });
-  const issueTypes = mapIssueTypes(file.rows);
+  const issueTypes = await mapIssueTypes(file.rows);
   const throughputByType = data.map((item) =>
     mapThroughputByType(item, issueTypes)
   );
-  const dataChart = mapDataChart(throughputByType);
-  const titles = mapTitles(data);
+  const dataChart = await mapDataChart(throughputByType);
+  const titles = await mapTitles(data);
   issueTypes.push("Throughput")
   const params = {fileName, titles, dataChart, issueTypes}
-  return drawThroughputChart(params,srcDir);
+  return await drawThroughputChart(params,srcDir);
 };
 
 module.exports = exportThroughputChart;
