@@ -5,7 +5,7 @@
   "main": "./src/api.js",
   "scripts": {
     "test": "mocha **/*.spec.js --recursive",
-    "start": "pm2-runtime start ecosystem.config.js --env production"
+    "start": "pm2-runtime ./src/api.js"
   },
   "author": "Jorge Leite (ujorgeleite)",
   "license": "ISC",
