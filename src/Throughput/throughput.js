@@ -14,6 +14,7 @@ const drawThroughputChart = async (
   srcDir
 ) => {
   const { fileName, titles, dataChart, issueTypes } = await params;
+  console.log('drawThroughputChart', fileName, titles, dataChart, issueTypes);
   var xlsxChart = new XLSXChart();
   var opts = {
     file: `${srcDir}Files/Output/${fileName}_THROUGHPUT.xlsx`,
