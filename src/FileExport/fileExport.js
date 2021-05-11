@@ -33,7 +33,7 @@ class FileExport {
           };
 
           await this.exportThroughputChart(params, this.sourcePath);
-          await this.exportLeadTimeChart(params, this.sourcePath);
+          //await this.exportLeadTimeChart(params, this.sourcePath);
         }, 2000);
       });
     });
