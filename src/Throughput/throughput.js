@@ -9,7 +9,10 @@ const {
   mapThroughputByType,
 } = require("./Mappers/index");
 
-const drawThroughputChart = ({fileName, titles, dataChart, issueTypes}, srcDir) => {
+const drawThroughputChart = (
+  { fileName, titles, dataChart, issueTypes },
+  srcDir
+) => {
   var xlsxChart = new XLSXChart();
   var opts = {
     file: `${srcDir}Files/Output/${fileName}_THROUGHPUT.xlsx`,
@@ -19,22 +22,23 @@ const drawThroughputChart = ({fileName, titles, dataChart, issueTypes}, srcDir) 
     data: dataChart,
   };
 
-  xlsxChart.writeFile(opts, function (err) {
+  xlsxChart.writeFile(opts, function(err) {
     console.log("File: ", opts.file);
   });
 };
 
-const exportThroughputChart = async ({fileName, file},srcDir) => {
+const exportThroughputChart = async ({ fileName, file }, srcDir) => {
   const data = await mapWorkItemsTotal({ rows: file.rows, daysPeriod: 7 });
-  const issueTypes = await mapIssueTypes(file.rows);
-  const throughputByType = data.map((item) =>
+  const issueTypes = mapIssueTypes(file.rows);
+  const throughputByType = data.map(item =>
     mapThroughputByType(item, issueTypes)
   );
-  const dataChart = await mapDataChart(throughputByType);
-  const titles = await mapTitles(data);
-  issueTypes.push("Throughput")
-  const params = {fileName, titles, dataChart, issueTypes}
-  return await drawThroughputChart(params,srcDir);
+  const dataChart = mapDataChart(throughputByType);
+  const titles = mapTitles(data);
+  issueTypes.push("Throughput");
+  const params = { fileName, titles, dataChart, issueTypes };
+  console.log('Throughput, Params: ', params);
+  return await drawThroughputChart(params, srcDir);
 };
 
 module.exports = exportThroughputChart;
