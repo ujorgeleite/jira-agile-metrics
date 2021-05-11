@@ -10,11 +10,9 @@ const {
 } = require("./Mappers/index");
 
 const drawThroughputChart = async (
-  params, 
+  { fileName, titles, dataChart, issueTypes }, 
   srcDir
 ) => {
-  const { fileName, titles, dataChart, issueTypes } = await params;
-  console.log('drawThroughputChart', fileName, titles, dataChart, issueTypes);
   var xlsxChart = new XLSXChart();
   var opts = {
     file: `${srcDir}Files/Output/${fileName}_THROUGHPUT.xlsx`,
@@ -39,8 +37,8 @@ const exportThroughputChart = async ({ fileName, file }, srcDir) => {
   const titles = mapTitles(data);
   issueTypes.push("Throughput");
   const params = { fileName, titles, dataChart, issueTypes };
-  console.log('Throughput, Params: ', params);
-  return await drawThroughputChart(params, srcDir);
+
+  return drawThroughputChart(params, srcDir);
 };
 
 module.exports = exportThroughputChart;
