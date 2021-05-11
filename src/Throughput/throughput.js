@@ -9,10 +9,11 @@ const {
   mapThroughputByType,
 } = require("./Mappers/index");
 
-const drawThroughputChart = (
-  { fileName, titles, dataChart, issueTypes },
+const drawThroughputChart = async (
+  params, 
   srcDir
 ) => {
+  const { fileName, titles, dataChart, issueTypes } = await params;
   var xlsxChart = new XLSXChart();
   var opts = {
     file: `${srcDir}Files/Output/${fileName}_THROUGHPUT.xlsx`,
