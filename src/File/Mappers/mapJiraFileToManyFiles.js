@@ -47,7 +47,7 @@ const mapRows = async (sheet) => {
   return rowsValues;
 };
 
-const mapFromSheetToManyFiles = async (file, Excel) => {
+const mapFromSheetToManyFiles = async (file, Excel, finalName) => {
   const fileNames = [];
 
   await file.eachSheet(async (sheet, index) => {
@@ -56,7 +56,7 @@ const mapFromSheetToManyFiles = async (file, Excel) => {
       const workSheet = newWorkbook.addWorksheet(`worksheet_${index}`);
       const rows = await mapRows(sheet);
       workSheet.addRows(rows);
-      const fileName = `${srcDir}/Files/SlicedFiles/file_${index}.xlsx`;
+      const fileName = `${srcDir}/Files/SlicedFiles/${finalName.replace('.xlsx','')}_${index}.xlsx`;
       await fileNames.push(fileName);
       await newWorkbook.xlsx.writeFile(fileName);
     }
