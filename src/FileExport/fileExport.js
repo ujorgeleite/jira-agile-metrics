@@ -41,7 +41,7 @@ class FileExport {
       return fileNames.map(async fileName => {
         setTimeout(async () => {
           await generateFiles(fileName, item);
-        }, 4000);
+        }, 4000 * dirFileNames.length);
       });
     });
   }
