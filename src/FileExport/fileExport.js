@@ -18,23 +18,28 @@ class FileExport {
   async exportFiles() {
     const dirFileNames = await await readDir(`${this.sourcePath}/Files/Input/`);
 
-    dirFileNames.filter(item => item.indexOf(".xlsx") >= 0)
-    .map(async item => {
+    const generateFiles = async (fileName, item) => {
+      const readFile = await this.file.getFile(fileName);
+      const params = {
+        fileName: item.replace(".xlsx", "").toUpperCase(),
+        file: readFile,
+      };
+
+      await this.exportThroughputChart(params, this.sourcePath);
+      await this.exportLeadTimeChart(params, this.sourcePath);
+    };
+
+    dirFileNames.filter(item => item.indexOf(".xlsx") >= 0).map(async item => {
       const fileNames = await this.breakFromJiraFile(
         `${this.sourcePath}Files/Input/${item}`
       );
 
       return fileNames.map(async fileName => {
-        setTimeout(async () => {
-          const readFile = await this.file.getFile(fileName);
-          const params = {
-            fileName: item.replace(".xlsx", "").toUpperCase(),
-            file: readFile,
-          };
 
-          await this.exportThroughputChart(params, this.sourcePath);
-          await this.exportLeadTimeChart(params, this.sourcePath);
-        }, 2000);
+        setTimeout(async () => {
+          await generateFiles(fileName, item);
+        },2000)
+        
       });
     });
   }
