@@ -82,9 +82,9 @@ class FileRoutes extends BaseRoute {
       method: "POST",
       handler: async (request, h) => {
         try {
-          const { upload0, fname } = request.payload;
-          await writeFile(`${this.uploadRootPath}/${fname}.xlsx`, upload0);
-          return h.response(`Arquivo ${fname} salvo com sucesso.`);
+          const { uploadFile, fileName } = request.payload;
+          await writeFile(`${this.uploadRootPath}/${fileName}.xlsx`, uploadFile);
+          return h.response(`Arquivo ${fileName} salvo com sucesso.`);
         } catch (ex) {
           h.reject(ex);
         }
