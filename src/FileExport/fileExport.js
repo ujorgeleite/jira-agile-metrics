@@ -19,14 +19,18 @@ class FileExport {
     const dirFileNames = await await readDir(`${this.sourcePath}/Files/Input/`);
 
     const generateFiles = async (fileName, item) => {
-      const readFile = await this.file.getFile(fileName);
-      const params = {
-        fileName: item.replace(".xlsx", "").toUpperCase(),
-        file: readFile,
-      };
+      try {
+        const readFile = await this.file.getFile(fileName);
+        const params = {
+          fileName: item.replace(".xlsx", "").toUpperCase(),
+          file: readFile,
+        };
 
-      await this.exportThroughputChart(params, this.sourcePath);
-      await this.exportLeadTimeChart(params, this.sourcePath);
+        await this.exportThroughputChart(params, this.sourcePath);
+        await this.exportLeadTimeChart(params, this.sourcePath);
+      } catch (ex) {
+        console.log("Here is the exception", ex);
+      }
     };
 
     dirFileNames.filter(item => item.indexOf(".xlsx") >= 0).map(async item => {
@@ -35,11 +39,9 @@ class FileExport {
       );
 
       return fileNames.map(async fileName => {
-
         setTimeout(async () => {
           await generateFiles(fileName, item);
-        },2000)
-        
+        }, 4000);
       });
     });
   }
