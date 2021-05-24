@@ -16,7 +16,7 @@ class FileExport {
   }
 
   async exportFiles() {
-    const dirFileNames = await await readDir(`${this.sourcePath}/Files/Input/`);
+    const dirFileNames = await readDir(`${this.sourcePath}/Files/Input/`);
 
     const generateFiles = async (fileName, item) => {
       try {
@@ -33,17 +33,22 @@ class FileExport {
       }
     };
 
+    const timeOutTotal = 4 * dirFileNames.length
     dirFileNames.filter(item => item.indexOf(".xlsx") >= 0).map(async item => {
       const fileNames = await this.breakFromJiraFile(
         `${this.sourcePath}Files/Input/${item}`
       );
 
-      return fileNames.map(async fileName => {
+      fileNames.map(async fileName => {
         setTimeout(async () => {
           await generateFiles(fileName, item);
-        }, 4000 * dirFileNames.length);
+        }, timeOutTotal*1000);
       });
+
+     
     });
+
+    return timeOutTotal+7
   }
 }
 

@@ -71,8 +71,7 @@ class FileRoutes extends BaseRoute {
       path: "/Process",
       method: "Post",
       handler: async () => {
-        await this.fileExport.exportFiles();
-        return "Gerado com sucesso";
+        return this.fileExport.exportFiles();
       },
     };
   }
@@ -114,6 +113,24 @@ class FileRoutes extends BaseRoute {
       },
     };
   }
+
+  deleteCharts(){
+    return {
+      path: "/Delete/Charts",
+      method: "DELETE",
+      handler: async (request, h) => {
+        const downloadFiles = await readFiles(`${this.rootPath}/Files/Output`);
+        
+        downloadFiles.map(async (item) => {
+          const file = `${this.rootPath}/Files/Output/${item}`
+          await deleteFile(file);
+        })
+
+        return "Arquivos removidos com  sucesso";
+      },
+    };
+  }
+
 
 
 }
